@@ -477,7 +477,13 @@ open class PagingMenuView: UIScrollView {
     }
 
     var maxContentOffsetX: CGFloat {
-        return max(bounds.width, contentSize.width + contentSafeAreaInsets.right + contentInset.right) - bounds.width
+      // 元々の式
+      // return max(bounds.width, contentSize.width + contentSafeAreaInsets.right + contentInset.right) - bounds.width
+      // ↑と等価な式が↓
+      // return max(0, contentSize.width + contentSafeAreaInsets.right + contentInset.right - bounds.width)
+      // ↑は最小を0としているが、実際はminContentOffsetXなのでは？
+      // ということで↓
+      return max(minContentOffsetX, (contentSize.width + contentSafeAreaInsets.right + contentInset.right) - bounds.width)
     }
     
     var minContentOffsetX: CGFloat {
